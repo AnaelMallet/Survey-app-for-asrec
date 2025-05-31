@@ -86,17 +86,147 @@ h1 {
     .SubmitSection {
       display: flex;
       gap: 1vw;
+
+      .SubmitMessage {
+        align-self: center;
+        font-size: 2vmin;
+        font-weight: bold;
+      }
+
+      .ErrorMessage {
+        color: #EE0000;
+      }
+
+      .SuccessMessage {
+        color: #00AA00;
+      }
     }
 
     #SubmitButton {
       width: 30%;
       font-size: 1.7vmin;
     }
+  }
+}
 
-    .SubmitError {
-      color: #EE0000;
+.SurveySection {
+  background-color: #EEEEEE;
+  margin: 5vh;
+  padding: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  gap: 4vh;
+
+  .Survey {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2vh;
+    width: 80%;
+    align-self: center;
+
+    .SurveyButtons {
+      display: flex;
+      gap: 1vw;
+
+      #ResultSurvey {
+        background-color: #AAAAAA;
+      }
+
+      .AlreadyRespondMessage {
+        align-self: center;
+        font-size: 2vmin;
+        font-weight: bold;
+        color: #00AA00;
+      }
+    }
+
+    h1 {
+      margin-top: -1vh;
+      word-wrap: break-word;
+    }
+
+    p {
+      color: gray;
+      margin-bottom: 3vh;
+      font-size: 1.5dvh;
+      word-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 100%;
+    }
+  }
+}
+
+.SurveyContainer {
+  background-color: #EEEEEE;
+  margin: 5vh;
+  padding: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+
+  .Survey {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2vh;
+    width: 80%;
+    align-self: center;
+
+    .AlreadyRespondMessage {
       align-self: center;
-      font-size: 1.6vmin;
+      font-size: 2vmin;
+      font-weight: bold;
+      color: #00AA00;
+    }
+
+  .AnswerSection {
+    margin-bottom: 1vh;
+
+    .ResponsePercentage {
+      background-color: #1565c0;
+      border-radius: 15px;
+      color: white;
+      font-style: bold;
+      padding-left: 0.7vw;
+      font-size: 2vh;
+    }
+  }
+
+    h1 {
+      margin-top: -1vh;
+      word-wrap: break-word;
+    }
+
+    p {
+      color: gray;
+      margin-bottom: 3vh;
+      font-size: 1.5dvh;
+      word-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 100%;
+    }
+
+    .SubmitSection {
+      display: flex;
+      gap: 1vw;
+
+      .SubmitMessage {
+        align-self: center;
+        font-size: 2vmin;
+        font-weight: bold;
+      }
+
+      .ErrorMessage {
+        color: #EE0000;
+      }
+
+      .SuccessMessage {
+        color: #00AA00;
+      }
     }
   }
 }

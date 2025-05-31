@@ -1,4 +1,8 @@
-import { EntityTarget, ObjectLiteral, Repository } from "typeorm"
+import {
+  EntityTarget,
+  ObjectLiteral,
+  Repository
+} from "typeorm"
 
 import { appDataSource } from "../../ormconfig"
 
