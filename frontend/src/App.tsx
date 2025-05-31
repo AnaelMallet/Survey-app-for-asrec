@@ -1,14 +1,14 @@
 import "./App.scss"
 
 import Sidebar from './components/Sidebar'
-import Main from "./components/Main"
+import Router from "./components/Router"
 
 
 function App() {
   return (
     <>
       <Sidebar/>
-      <Main />
+      <Router />
     </>
   )
 }

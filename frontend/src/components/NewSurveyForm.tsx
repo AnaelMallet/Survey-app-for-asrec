@@ -8,6 +8,7 @@ import {
 } from '@mui/material'
 import { CirclePlus, Trash2 } from 'lucide-react'
 import { useState } from 'react'
+import classNames from "classnames"
 
 export default function NewSurveyForm() {
   const [ subject, setSubject ] = useState("")
@@ -15,7 +16,8 @@ export default function NewSurveyForm() {
   const [ answers, setAnswers ] = useState([{ response: "" }, { response: "" }])
   const [ isUniqueUser, setIsUniqueUser ] = useState(false)
   const [ isUniqueAnswer, setIsUniqueAnswer ] = useState(false)
-  const [ error, setError ] = useState("")
+  const [ message, setMessage ] = useState("")
+  const [ messageIsError, setMessageIsError ] = useState(false)
 
   type AnswerDto = {
     response: string
@@ -37,46 +39,51 @@ export default function NewSurveyForm() {
         body: JSON.stringify({ survey: dto })
       })
 
-    } catch(err) {
-      console.error(err)
+      setMessageIsError(() => false)
+      setMessage(() => "Le sondage a été créé.")
+    } catch(error) {
+      setMessageIsError(() => true)
+      setMessage(() => error as string)
     }
   } 
 
-  function handleSubmit(e: any) {
+  async function handleSubmit(e: any) {
     e.preventDefault()
 
-    setError(() => "")
+    setMessageIsError(() => false)
+    setMessage(() => "")
 
     if (answers.length <= 1) {
-      setError(() => "Le nombre de réponse possible est incorrect.")
+      setMessageIsError(() => true)
+      setMessage(() => "Le nombre de réponse possible est incorrect.")
       return
     }
 
     const createSurveyFormValues: SurveyDto = {
-    subject,
-    description,
-    answers,
-    isUniqueUser,
-    isUniqueAnswer
+      subject,
+      description,
+      answers,
+      isUniqueUser,
+      isUniqueAnswer
+    }
+
+    await fetchData(createSurveyFormValues)
   }
 
-  fetchData(createSurveyFormValues)
-  }
-
-  function handleAnswerFieldValueChange(index: number, e: any) {
+  function handleAnswerFieldValueChange(index: number, value: string) {
     const fields = [ ...answers ]
 
-    fields[index].response = e.target.value
+    fields[index].response = value
 
-    setAnswers(fields)
+    setAnswers(() => fields)
   }
 
-  function handleDescriptionTextAreaChange(e: any) {
-    setDescription(() => e.target.value)
+  function handleDescriptionTextAreaChange(value: string) {
+    setDescription(() => value)
   }
 
   function handleAddAnswersField() {
-    setAnswers([ ...answers, { response: "" } ])
+    setAnswers(() => [ ...answers, { response: "" } ])
   }
 
   function handleRemoveAnswersField(index: number) {
@@ -103,7 +110,7 @@ export default function NewSurveyForm() {
           required
           minRows={5}
           placeholder="Description du sondage"
-          onChange={(e) => handleDescriptionTextAreaChange(e)}
+          onChange={(e) => handleDescriptionTextAreaChange(e.target.value)}
         />
         {answers.map((field, index) => (
           <div key={index} className="AnswerFields">
@@ -113,7 +120,7 @@ export default function NewSurveyForm() {
               value={field.response}
               sx={{ width: "70%" }}
               required
-              onChange={(e) => handleAnswerFieldValueChange(index, e)}
+              onChange={(e) => handleAnswerFieldValueChange(index, e.target.value)}
             />
             <Button
               id="DeleteAnswerButton"
@@ -126,12 +133,16 @@ export default function NewSurveyForm() {
         ))}
         <Button onClick={handleAddAnswersField} color="info" id="AddAnswerButton"><CirclePlus/>Ajouter une réponse</Button>
         <FormGroup>
-          <FormControlLabel onChange={() => setIsUniqueUser(!isUniqueUser)} control={<Checkbox/>} color="black" label="Réponse unique ?"/>
-          <FormControlLabel onChange={() => setIsUniqueAnswer(!isUniqueAnswer)} control={<Checkbox/>} color="black" label="Sélection unique ?"/>
+          <FormControlLabel onChange={() => setIsUniqueUser(!isUniqueUser)} control={<Checkbox/>} color="black" label="Une réponse par utilisateur ?"/>
+          <FormControlLabel onChange={() => setIsUniqueAnswer(!isUniqueAnswer)} control={<Checkbox/>} color="black" label="Un choix possible ?"/>
         </FormGroup>
         <section className="SubmitSection">
           <Button color="success" type="submit" variant="contained" id="SubmitButton">Créer le sondage</Button>
-          { !!error === true ? <span className="SubmitError">{error}</span> : <></> }
+          { !!message === true ? <span className={classNames({
+            "SubmitMessage": true,
+            "ErrorMessage": messageIsError,
+            "SuccessMessage": !messageIsError
+          })}>{message}</span> : <></> }
         </section>
       </form>
     </div>

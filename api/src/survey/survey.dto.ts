@@ -1,4 +1,5 @@
 import { IsNotEmpty } from "class-validator"
+
 import AnswerDto from "./answer.dto"
 
 export class SurveyDto {

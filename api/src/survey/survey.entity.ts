@@ -1,14 +1,14 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
   BaseEntity,
   OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm"
 
+import { Response } from "../response/response.entity"
+
 import { AnswerEntity } from "./answer.entity"
-import { UserEntity } from "../user/user.entity"
 
 @Entity({ name: 'surveys' })
 export class Survey extends BaseEntity {
@@ -34,6 +34,6 @@ export class Survey extends BaseEntity {
     })
   answers: AnswerEntity[]
 
-  @OneToMany(() => UserEntity, user => user.survey)
-  users: UserEntity[]
+  @OneToMany(() => Response, response => response.survey)
+  responses: Response[]
 }

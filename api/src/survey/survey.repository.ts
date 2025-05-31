@@ -1,31 +1,40 @@
-import BasicRepository from "src/shared/basicRepository"
+import { Injectable } from "@nestjs/common"
+import { DataSource, Repository } from "typeorm"
 
 import { Survey } from "./survey.entity"
 
-export class SurveyRepository extends BasicRepository<Survey> {
+@Injectable()
+export class SurveyRepository extends Repository<Survey> {
   alias = "surveys"
+
+  constructor(dataSource: DataSource) {
+    super(Survey, dataSource.createEntityManager())
+  }
 
   async findAll(): Promise<Survey[]> {
     return await this
-      .repository
       .createQueryBuilder(this.alias)
-      .select([
-        "title",
-        "description",
-        "isUniqueUser"
-      ])
+      .leftJoinAndSelect(
+        `${this.alias}.responses`,
+        "survey_responses",
+        `${this.alias}.is_unique_user = true`
+      )
       .getMany()
   }
 
   async findOneByUuid(uuid: string): Promise<Survey> {
     return await this
-      .repository
       .createQueryBuilder(this.alias)
+      .innerJoinAndSelect(`${this.alias}.answers`, "survey_answers")
+      .leftJoinAndSelect(
+        `${this.alias}.responses`,
+        "survey_responses",
+        `${this.alias}.is_unique_user = true`)
       .where(`${this.alias}.uuid = :uuid`, { uuid })
       .getOne()
   }
 
-  async save(entity: Survey): Promise<void> {
-    await this.repository.save(entity)
+  async createSurvey(entity: Survey): Promise<void> {
+    await this.save(entity)
   }
 }
