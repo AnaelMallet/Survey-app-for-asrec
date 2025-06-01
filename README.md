@@ -24,8 +24,8 @@
 
 ## tâches
 
-[X] - Créer un sondage
-[X] - Répondre a un sondage
-[X] - Voir les résultats d'un sondage
-[X] - Empecher qu'un utilisateur puisse répondre plusierus a un sondage qui ne l'autorise pas.
-[X] - Permettre a un sondage d'avoir une ou plusieurs réponse possible.
+- [x] - Créer un sondage  
+- [x] - Répondre a un sondage  
+- [x] - Voir les résultats d'un sondage  
+- [x] - Empecher qu'un utilisateur puisse répondre plusierus a un sondage qui ne l'autorise pas.  
+- [x] - Permettre a un sondage d'avoir une ou plusieurs réponse possible.
