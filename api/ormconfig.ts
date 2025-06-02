@@ -3,7 +3,7 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies"
 
 const ormConfig: DataSourceOptions = {
   type: "postgres",
-  host: "localhost",
+  host: process.env.DATABASE_HOST,
   port: 5432,
   username: "postgres",
   password: "admin",
